@@ -1,6 +1,4 @@
-import '../commom/template/dependencies'
 import React from 'react'
-import Routes from './routes'
  
 import Header from '../commom/template/header'
 import Sidebar from '../commom/template/sidebar'
@@ -12,7 +10,7 @@ export default props => (
     <Header />
     <Sidebar />
     <div className="content-wrapper">
-      <Routes />
+      {props.children}
     </div>
     <Footer />
     <Messages />
