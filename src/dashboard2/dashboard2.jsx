@@ -1,21 +1,26 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import axios from 'axios'
 
-import { getSummary } from './dashboardActions'
 import ContentHeader from '../commom/template/contentHeader'
 import Content from '../commom/template/content'
 import ValueBox from '../commom/widget/valueBox'
 import Row from '../commom/layout/row'
 
-class Dashboard extends Component {
+const BASE_URL = 'http://localhost:3003/api'
+
+export default class Dashboard2 extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { credit: 0 , debt: 0 }
+  }
 
   componentWillMount() {
-    this.props.getSummary()
+    axios.get(`${BASE_URL}/billingCycles/summary`)
+      .then(resp => this.setState(res.data))
   }
 
   render() {
-    const { credit, debt } = this.props.summary
+    const { credit, debt } = this.state
     return (
       <div>
         <ContentHeader title='Dashboard' small='Versão 1.0' />
@@ -33,8 +38,3 @@ class Dashboard extends Component {
     )
   }
 }
-
-const mapStateToProps = state => ({summary: state.dashboard.summary})
-const mapDispatchToProps = dispatch => bindActionCreators({ getSummary }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
